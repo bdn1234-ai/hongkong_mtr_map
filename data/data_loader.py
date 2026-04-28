@@ -1,8 +1,13 @@
 import json
+import os
 
 class GraphData:
-    def __init__(self, graph_path="../data/processed_data/graph.json", 
-    coords_path="../data/processed_data/coords.json"):
+    def __init__(self, graph_path=None, coords_path=None):
+        if graph_path is None:
+            graph_path = os.path.join(os.path.dirname(__file__), "processed_data", "graph.json")
+        if coords_path is None:
+            coords_path = os.path.join(os.path.dirname(__file__), "processed_data", "coords.json")
+        
         with open(graph_path, "r", encoding="utf-8") as f:
             self.graph = json.load(f)
 
