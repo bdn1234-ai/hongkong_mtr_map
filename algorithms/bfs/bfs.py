@@ -1,5 +1,5 @@
 from collections import deque
-from data_loader import GraphData
+from data.data_loader import GraphData
 
 def bfs(data: GraphData, start: str, goal: str) -> list[str] | None:
 
