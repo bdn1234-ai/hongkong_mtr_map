@@ -1,7 +1,3 @@
-import sys
-import os
-sys.path.append(os.path.abspath('../..'))
-
 from collections import deque
 from data.data_loader import GraphData
 
@@ -48,6 +44,6 @@ def _reconstruct_path(camefrom: dict, goal: str) -> list[str]:
     return list(reversed(path))
 
 
-# data = GraphData()
-# result = bfs(data, "Central", "Hung Hom")
-# print(result)
+data = GraphData()
+result = bfs(data, "Central", "Hung Hom")
+print(result)

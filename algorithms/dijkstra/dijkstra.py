@@ -1,7 +1,3 @@
-import sys
-import os
-sys.path.append(os.path.abspath('../..'))
-
 import heapq
 from data.data_loader import GraphData
 
