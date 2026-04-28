@@ -24,11 +24,16 @@ def ucs(data: GraphData, src: str, des: str) -> dict:
     closed = set()          
     save_path = {}          # station -> prev station
     explored = []
+    g_cost = {src: 0.}
 
     #loop:
     while fringe:
     #   take out lowest cost in fringe
         cost, current = heapq.heappop(fringe)
+
+        if cost > g_cost.get(current, float("inf")):
+            continue
+
         closed.add(current)
         explored.append(current)
 
@@ -46,15 +51,20 @@ def ucs(data: GraphData, src: str, des: str) -> dict:
         
     #   push neighbors into fringe
         for v, e in data.get_neighbors(current):
+            new_cost = cost + e
+
             if v in closed:
                 continue
 
-            heapq.heappush(fringe, (cost + e, v))
-            save_path[v] = current
+            if new_cost < g_cost.get(v, float("inf")):
+                g_cost[v] = new_cost
+                heapq.heappush(fringe, (new_cost, v))
+                save_path[v] = current
 
     #   no more in fringe -> return none
     return None
 
 #####test
-result = ucs("Central", "Hung Hom")
-print(result)
+# data = GraphData()
+# result = ucs(data, "Central", "Hung Hom")
+# print(result)
