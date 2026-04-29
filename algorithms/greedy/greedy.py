@@ -30,8 +30,18 @@ def greedy(data: GraphData, src: str, des: str) -> dict | None:
 
         # Found goal
         if current == des:
-            path = _reconstruct(parent, src, des)
-            cost = _compute_cost(data, path)
+            # Retrace path
+            path = [current]
+            while current != src:
+                current = parent[current]
+                path.append(current)
+            path = list(reversed(path))
+            
+            # Compute cost
+            cost = 0.0
+            for i in range(len(path) - 1):
+                cost += data.get_cost(path[i], path[i+1])
+                
             return {
                 "path": path,
                 "cost": round(cost, 4),
@@ -46,26 +56,6 @@ def greedy(data: GraphData, src: str, des: str) -> dict | None:
 
     return None
 
-
-def _reconstruct(parent: dict, src: str, goal: str) -> list[str]:
-    path = [goal]
-    current = goal
-
-    while current != src:
-        current = parent[current]
-        path.append(current)
-
-    return list(reversed(path))
-
-
-def _compute_cost(data: GraphData, path: list[str]) -> float:
-    cost = 0.0
-    for i in range(len(path) - 1):
-        for neighbor, w in data.get_neighbors(path[i]):
-            if neighbor == path[i + 1]:
-                cost += w
-                break
-    return cost
 
 # data = GraphData()
 # result = greedy(data, "Central", "Hung Hom")
