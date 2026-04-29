@@ -121,7 +121,16 @@ exists = data.has_node("Central")
 ```
 
 
+### 7. Block edge
 
+```python
+block_station_path("Central", "Admiralty") 
+```
+
+### 8. Unblock edge
+```python
+unblock_station_path("Central", "Admiralty") 
+```
 ## Ví dụ dùng trong A*
 
 ```python

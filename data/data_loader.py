@@ -1,6 +1,7 @@
 import json
 import os
 import math
+from .traffic_manager import TrafficManager
 
 class GraphData:
     def __init__(self, graph_path=None, coords_path=None):
@@ -15,6 +16,8 @@ class GraphData:
         with open(coords_path, "r", encoding="utf-8") as f:
             self.coords = json.load(f)
 
+        self.traffic = TrafficManager()
+
     def get_nodes(self):
         return list(self.graph.keys())
     
@@ -22,7 +25,11 @@ class GraphData:
         return node in self.graph
     
     def get_neighbors(self, node):
-        return self.graph.get(node, [])
+        all_neighbors = self.graph.get(node, [])
+        return [
+            [neighbor, cost] for neighbor, cost in all_neighbors 
+            if self._get_edge_key(node, neighbor) not in self.blocked_edges
+        ]
 
     def get_cost(self, u, v):
         for neighbor, cost in self.graph.get(u, []):
@@ -49,6 +56,12 @@ class GraphData:
         c = 2 * math.asin(math.sqrt(a))
 
         return R * c
+    
+    def block_station_path(self, u, v):
+        self.traffic.block(u, v)
+
+    def unblock_station_path(self, u, v):
+        self.traffic.unblock(u, v)
 
     
         
