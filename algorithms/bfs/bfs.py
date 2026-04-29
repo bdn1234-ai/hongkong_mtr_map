@@ -44,6 +44,6 @@ def _reconstruct_path(camefrom: dict, goal: str) -> list[str]:
     return list(reversed(path))
 
 
-data = GraphData()
-result = bfs(data, "Central", "Hung Hom")
-print(result)
+# data = GraphData()
+# result = bfs(data, "Central", "Hung Hom")
+# print(result)

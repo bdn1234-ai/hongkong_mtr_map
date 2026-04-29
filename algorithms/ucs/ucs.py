@@ -62,5 +62,5 @@ def ucs(data: GraphData, src: str, des: str) -> dict:
 
 #####test
 # data = GraphData()
-# result = ucs(data, "Central", "Hung Hom")
+# result = ucs(data, "Central", "HKU")
 # print(result)

@@ -1,5 +1,6 @@
 import json
 import os
+import math
 
 class GraphData:
     def __init__(self, graph_path=None, coords_path=None):
@@ -35,11 +36,19 @@ class GraphData:
 
     
     def heuristic(self, a, b):
-        coord_a = self.get_coord(a)
-        coord_b = self.get_coord(b)
+        R = 6371  
+        lat1, lon1 = self.get_coord(a)
+        lat2, lon2 = self.get_coord(b)  
+        lat1, lon1 = math.radians(lat1), math.radians(lon1)
+        lat2, lon2 = math.radians(lat2), math.radians(lon2)
 
-        if not coord_a or not coord_b:
-            return 0
+        dlat = lat2 - lat1
+        dlon = lon2 - lon1
+
+        a = math.sin(dlat/2)**2 + math.cos(lat1)*math.cos(lat2)*math.sin(dlon/2)**2
+        c = 2 * math.asin(math.sqrt(a))
+
+        return R * c
 
     
-        return abs(coord_a[0] - coord_b[0]) + abs(coord_a[1] - coord_b[1])
+        
