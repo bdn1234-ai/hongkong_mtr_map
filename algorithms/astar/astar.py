@@ -36,8 +36,15 @@ def astar(data: GraphData, start: str, goal: str) -> dict | None:
         closed.add(current)
 
         if current == goal:
+            # Retrace path
+            path = [current]
+            while current != start:
+                current = came_from[current]
+                path.append(current)
+            path = list(reversed(path))
+            
             return {
-                "path": _reconstruct(came_from, goal),
+                "path": path,
                 "cost": round(g[goal], 4),
                 "explored": explored,
             }
@@ -55,15 +62,6 @@ def astar(data: GraphData, start: str, goal: str) -> dict | None:
                 heapq.heappush(open_heap, (f, neighbor))
 
     return None  # no path found
-
-
-def _reconstruct(came_from: dict, current: str) -> list[str]:
-    """Walk came_from backwards to build start → goal path."""
-    path = [current]
-    while current in came_from:
-        current = came_from[current]
-        path.append(current)
-    return list(reversed(path))
 
 
 # data = GraphData()
