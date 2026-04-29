@@ -65,7 +65,7 @@ def _reconstruct(came_from: dict, current: str) -> list[str]:
         path.append(current)
     return list(reversed(path))
 
-data = GraphData()
-result = astar(data, "Central", "Hong Kong")
+#data = GraphData()
+#result = astar(data, "Central", "Hong Kong")
 
-print(result, data.heuristic("Fo Tan", "Tin Hau"))
+#print(result, data.heuristic("Fo Tan", "Tin Hau"))
