@@ -19,8 +19,13 @@ def bfs(data: GraphData, start: str, goal: str) -> dict | None:
         explored.append(current)
 
         if current == goal:
-            path = _reconstruct_path(camefrom, goal)
-
+            
+            path = [current]
+            while current != start:
+                current = camefrom[current]
+                path.append(current)
+            path = list(reversed(path))
+            
             return {
                 "path": path,
                 "cost": len(path) - 1,   
@@ -34,15 +39,6 @@ def bfs(data: GraphData, start: str, goal: str) -> dict | None:
                 queue.append(neighbor)
 
     return None 
-
-def _reconstruct_path(camefrom: dict, goal: str) -> list[str]:
-    path = []
-    current = goal
-    while current is not None:
-        path.append(current)
-        current = camefrom[current]
-    return list(reversed(path))
-
 
 # data = GraphData()
 # result = bfs(data, "Central", "Hung Hom")
